@@ -48,7 +48,7 @@ export class UserResolver {
 		@Arg("options") options: UsernamePasswordInput
 	): Promise<UserResponse> {
 		const errors = validateRegister(options);
-		// if we get an error response, return the response to display to the user
+
 		if (errors) {
 			return { errors };
 		}
@@ -81,6 +81,42 @@ export class UserResolver {
 					],
 				};
 			}
+		}
+		return { user };
+	}
+	@Mutation(() => UserResponse)
+	async login(
+		@Arg("usernameOrEmail") usernameOrEmail: string,
+		@Arg("password") password: string
+	): Promise<UserResponse> {
+		// check to see if user exists in our db
+		// since we're allowing users to login with username or email, if it includes an @ we assume it is an email and set
+		// the given value as an email, otherwise as a username
+		const user = await User.findOne(
+			usernameOrEmail.includes("@")
+				? { where: { email: usernameOrEmail } }
+				: { where: { username: usernameOrEmail } }
+		);
+		if (!user) {
+			return {
+				errors: [
+					{
+						field: "usernameOrEmail",
+						message: "Username doesn't exist",
+					},
+				],
+			};
+		}
+		const valid = await argon2.verify(user.password, password);
+		if (!valid) {
+			return {
+				errors: [
+					{
+						field: "password",
+						message: "Incorrect Password",
+					},
+				],
+			};
 		}
 		return { user };
 	}
