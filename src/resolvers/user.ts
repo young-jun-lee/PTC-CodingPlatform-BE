@@ -21,4 +21,9 @@ export class UserResolver {
 		}
 		return User.findOne({ where: { id: req.session.userId } });
 	}
+	// custom query to return a list of all existing users in db
+	@Query(() => [User], { nullable: true })
+	async listUsers(): Promise<User[] | null> {
+		return User.find();
+	}
 }
