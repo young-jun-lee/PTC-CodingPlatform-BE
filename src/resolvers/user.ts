@@ -1,4 +1,4 @@
-import { User } from "src/entities/User";
+import { User } from "../entities/User";
 import { MyContext } from "src/types";
 import { Ctx, Field, ObjectType, Query } from "type-graphql";
 
