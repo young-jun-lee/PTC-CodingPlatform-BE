@@ -11,6 +11,7 @@ import { AppDataSource } from "./typeorm-config";
 const main = async () => {
 	await AppDataSource.initialize();
 	const app = express();
+	await AppDataSource.runMigrations();
 
 	app.set("trust proxy", 1);
 	app.use(

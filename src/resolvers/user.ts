@@ -1,10 +1,11 @@
-import { User } from "../entities/User";
+import { User } from "../entities/Users";
 import { MyContext } from "../types";
 import { Arg, Ctx, Field, Mutation, ObjectType, Query } from "type-graphql";
 import { validateRegister } from "../utils/validateRegister";
 import { UsernamePasswordInput } from "./UsernamePasswordInput";
 import { AppDataSource } from "../typeorm-config";
 import argon2 from "argon2";
+import { COOKIE_NAME } from "../constants";
 
 @ObjectType()
 // define a custom error containing which field was problematic and a nice message
@@ -37,6 +38,7 @@ export class UserResolver {
 		}
 		return User.findOne({ where: { id: req.session.userId } });
 	}
+
 	// custom query to return a list of all existing users in db
 	@Query(() => [User], { nullable: true })
 	async listUsers(): Promise<User[] | null> {
@@ -119,5 +121,20 @@ export class UserResolver {
 			};
 		}
 		return { user };
+	}
+
+	@Mutation(() => Boolean)
+	logout(@Ctx() { req, res }: MyContext): Promise<boolean> {
+		return new Promise((resolve) =>
+			req.session.destroy((err) => {
+				res.clearCookie(COOKIE_NAME);
+				if (err) {
+					console.log(err);
+					resolve(false);
+					return;
+				}
+				resolve(true);
+			})
+		);
 	}
 }

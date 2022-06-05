@@ -1,7 +1,8 @@
 import "reflect-metadata";
 import "dotenv/config";
 import { DataSource } from "typeorm";
-import { User } from "./entities/User";
+import { User } from "./entities/Users";
+import path from "path";
 
 require("dotenv").config();
 
@@ -11,5 +12,6 @@ export const AppDataSource = new DataSource({
 	username: process.env.USERNAME,
 	password: process.env.PASSWORD,
 	synchronize: true,
+	migrations: [path.join(__dirname, "./migrations/*")],
 	entities: [User],
 });
