@@ -1,11 +1,13 @@
-import { User } from "../entities/Users";
-import { MyContext } from "../types";
+import argon2 from "argon2";
+import { MyContext } from "src/types";
 import { Arg, Ctx, Field, Mutation, ObjectType, Query } from "type-graphql";
+import { v4 } from "uuid";
+import { COOKIE_NAME, FORGOT_PASSWORD_PREFIX } from "../constants";
+import { User } from "../entities/Users";
+import { AppDataSource } from "../typeorm-config";
+import { sendEmail } from "../utils/sendEmail";
 import { validateRegister } from "../utils/validateRegister";
 import { UsernamePasswordInput } from "./UsernamePasswordInput";
-import { AppDataSource } from "../typeorm-config";
-import argon2 from "argon2";
-import { COOKIE_NAME } from "../constants";
 
 @ObjectType()
 // define a custom error containing which field was problematic and a nice message
@@ -136,5 +138,87 @@ export class UserResolver {
 				resolve(true);
 			})
 		);
+	}
+
+	// want to log the user in after changing password, so we pass back a userresponse containing the user
+	@Mutation(() => UserResponse)
+	async changePassword(
+		@Arg("newPassword") newPassword: string,
+		@Arg("token") token: string,
+		@Ctx() { redis, req }: MyContext
+	): Promise<UserResponse> {
+		if (newPassword.length <= 3) {
+			return {
+				errors: [
+					{
+						field: "newPassword",
+						message: "Password length must be greater than 3",
+					},
+				],
+			};
+		}
+		const key = FORGOT_PASSWORD_PREFIX + token;
+		const userId = await redis.get(key);
+		if (!userId) {
+			return {
+				errors: [
+					{
+						field: "token",
+						message: "Token expired",
+					},
+				],
+			};
+		}
+		// redis stores all of its key-values as strings but our id is a number so we need to convert it
+		const userIdNum = parseInt(userId);
+		const user = await User.findOne({ where: { id: userIdNum } });
+
+		if (!user) {
+			return {
+				errors: [
+					{
+						field: "token",
+						message: "User no longer exists",
+					},
+				],
+			};
+		}
+		User.update(
+			{ id: userIdNum },
+			{ password: await argon2.hash(newPassword) }
+		);
+
+		// log in user after changing password
+		req.session.userId = user.id;
+
+		// clear the redis key so that the link can't be used again to change password
+		await redis.del(key);
+		return { user };
+	}
+
+	@Mutation(() => Boolean)
+	async forgotPassword(
+		@Arg("email") email: string,
+		@Ctx() { redis }: MyContext
+	) {
+		const user = await User.findOne({ where: { email } });
+		if (!user) {
+			// the email is not in the db
+			return true;
+		}
+		const token = v4();
+		await redis.set(
+			FORGOT_PASSWORD_PREFIX + token,
+			user.id,
+			"EX",
+			1000 * 60 * 60 * 24 * 3 // expire after 3 days
+		);
+
+		await sendEmail(
+			email,
+			`<a href="http://localhost:3000/change-password/${token}">reset password</a>`
+		);
+
+		return true;
 	}
 }
