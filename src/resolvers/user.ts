@@ -49,7 +49,8 @@ export class UserResolver {
 
 	@Mutation(() => UserResponse)
 	async register(
-		@Arg("options") options: UsernamePasswordInput
+		@Arg("options") options: UsernamePasswordInput,
+		@Ctx() { req }: MyContext
 	): Promise<UserResponse> {
 		const errors = validateRegister(options);
 
@@ -86,12 +87,15 @@ export class UserResolver {
 				};
 			}
 		}
+		// store userid session which sets the cookie and keeps them logged in
+		req.session.userId = user.id;
 		return { user };
 	}
 	@Mutation(() => UserResponse)
 	async login(
 		@Arg("usernameOrEmail") usernameOrEmail: string,
-		@Arg("password") password: string
+		@Arg("password") password: string,
+		@Ctx() { req }: MyContext
 	): Promise<UserResponse> {
 		// check to see if user exists in our db
 		// since we're allowing users to login with username or email, if it includes an @ we assume it is an email and set
@@ -122,6 +126,7 @@ export class UserResolver {
 				],
 			};
 		}
+		req.session.userId = user.id;
 		return { user };
 	}
 
