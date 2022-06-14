@@ -11,14 +11,15 @@ import { COOKIE_NAME, __prod__ } from "./constants";
 import { UserResolver } from "./resolvers/user";
 import { AppDataSource } from "./typeorm-config";
 import { MyContext } from "./types";
-
+// import { User } from "./entities/Users";
 const main = async () => {
 	const app = express();
 	const RedisStore = connectRedis(session);
 	const redis = new Redis();
-
+	//
 	await AppDataSource.initialize();
-	await AppDataSource.runMigrations();
+	// await User.delete({});
+	await AppDataSource.runMigrations({ transaction: "all" });
 
 	app.set("trust proxy", 1);
 	app.use(
@@ -36,7 +37,7 @@ const main = async () => {
 				disableTouch: true,
 			}),
 			cookie: {
-				maxAge: 1000 * 60 * 24 * 24 * 10, // 10 years
+				maxAge: 1000 * 60 * 60 * 24 * 60, // 2 months
 				httpOnly: true,
 				sameSite: "lax",
 				secure: __prod__, //cookie only works in https

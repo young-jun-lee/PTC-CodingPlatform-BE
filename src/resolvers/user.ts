@@ -1,17 +1,18 @@
 import argon2 from "argon2";
+
 import { MyContext } from "src/types";
 import { Arg, Ctx, Field, Mutation, ObjectType, Query } from "type-graphql";
 import { v4 } from "uuid";
 import { COOKIE_NAME, FORGOT_PASSWORD_PREFIX } from "../constants";
 import { User } from "../entities/Users";
 import { AppDataSource } from "../typeorm-config";
-import { sendEmail } from "../utils/sendEmail";
+import { sendEmail } from "../utils/email/sendEmail";
 import { validateRegister } from "../utils/validateRegister";
 import { UsernamePasswordInput } from "./UsernamePasswordInput";
 
 @ObjectType()
 // define a custom error containing which field was problematic and a nice message
-class FieldError {
+class MessageField {
 	@Field()
 	field: string;
 	@Field()
@@ -23,8 +24,11 @@ class FieldError {
 // question mark operator indicates that it is an optional field, so the returned response is an object that
 // may include errors and may include a user
 class UserResponse {
-	@Field(() => [FieldError], { nullable: true })
-	errors?: FieldError[];
+	@Field(() => [MessageField], { nullable: true })
+	errors?: MessageField[];
+
+	@Field(() => [MessageField], { nullable: true })
+	success?: MessageField[];
 
 	@Field(() => User, { nullable: true })
 	user?: User;
@@ -67,6 +71,8 @@ export class UserResolver {
 				.into(User)
 				.values({
 					username: options.username,
+					firstName: options.firstName,
+					lastName: options.lastName,
 					email: options.email,
 					password: hashedPassword,
 				})
@@ -74,9 +80,10 @@ export class UserResolver {
 				.execute();
 			user = result.raw[0];
 		} catch (error) {
+			console.log(error.detail);
 			// try catch block to handle edge cases such as a user is already registered with the same name
 			// error code 23505 means duplicate key exists
-			if (error.code === "23505") {
+			if (error.code === "23505" && error.detail.includes("username")) {
 				return {
 					errors: [
 						{
@@ -86,7 +93,36 @@ export class UserResolver {
 					],
 				};
 			}
+			if (error.code === "23505" && error.detail.includes("email")) {
+				return {
+					errors: [
+						{
+							field: "email",
+							message:
+								"An account with this email already exists",
+						},
+					],
+				};
+			}
 		}
+		const username =
+			user.firstName[0].toUpperCase() + user.firstName.slice(1);
+		await sendEmail(
+			options.email,
+			"PTC Coding Challenge - Account Creation Successful",
+			`<html>
+			<head>
+			  <style>
+			  </style>
+			</head>
+			<body>
+			  <p>Hi ${username},</p>
+			  <p>Your account creation was successful! </p> 
+			  <p> Welcome to the PTC Coding Challenge</p>
+			</body>
+		  </html>`
+		);
+
 		// store userid session which sets the cookie and keeps them logged in
 		req.session.userId = user.id;
 		return { user };
@@ -121,7 +157,7 @@ export class UserResolver {
 				errors: [
 					{
 						field: "password",
-						message: "Incorrect Password",
+						message: "Incorrect username or password",
 					},
 				],
 			};
@@ -163,6 +199,7 @@ export class UserResolver {
 			};
 		}
 		const key = FORGOT_PASSWORD_PREFIX + token;
+		console.log(newPassword);
 		const userId = await redis.get(key);
 		if (!userId) {
 			return {
@@ -198,10 +235,28 @@ export class UserResolver {
 
 		// clear the redis key so that the link can't be used again to change password
 		await redis.del(key);
+
+		const username =
+			user.firstName[0].toUpperCase() + user.firstName.slice(1);
+		await sendEmail(
+			user.email,
+			"PTC Coding Challenge - Password Change Successful",
+			`<html>
+			<head>
+				<style>
+				</style>
+			</head>
+			<body>
+				<p>Hi ${username},</p>
+				<p>Your password has been changed successfully</p>
+			</body>
+		</html>`
+		);
+
 		return { user };
 	}
 
-	@Mutation(() => Boolean)
+	@Mutation(() => UserResponse)
 	async forgotPassword(
 		@Arg("email") email: string,
 		@Ctx() { redis }: MyContext
@@ -209,7 +264,14 @@ export class UserResolver {
 		const user = await User.findOne({ where: { email } });
 		if (!user) {
 			// the email is not in the db
-			return true;
+			return {
+				errors: [
+					{
+						field: "token",
+						message: "Invalid email please try again",
+					},
+				],
+			};
 		}
 		const token = v4();
 		await redis.set(
@@ -219,11 +281,32 @@ export class UserResolver {
 			1000 * 60 * 60 * 24 * 3 // expire after 3 days
 		);
 
+		const username =
+			user.firstName[0].toUpperCase() + user.firstName.slice(1);
 		await sendEmail(
 			email,
-			`<a href="http://localhost:3000/change-password/${token}">reset password</a>`
+			"PTC Coding Coding Challenge - Account Password Reset",
+			`<html>
+				<head>
+					<style>
+					</style>
+				</head>
+				<body>
+					<p>Hi ${username},</p>
+					<p>You requested to reset your password.</p>
+					<p> Please click the link below to reset your password.</p>
+					<a href="http://localhost:3000/change-password/${token}">Reset PTC account password</a>
+				</body>
+			</html>`
 		);
 
-		return true;
+		return {
+			success: [
+				{
+					field: "idk",
+					message: "Email sent! Please check your inbox",
+				},
+			],
+		};
 	}
 }

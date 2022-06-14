@@ -34,6 +34,7 @@
 		"typescript": "^4.6.4"
 	},
 	"dependencies": {
+		"@types/nodemailer-express-handlebars": "^4.0.2",
 		"apollo-server-express": "^3.6.1",
 		"argon2": "^0.28.5",
 		"connect-redis": "^6.0.0",
@@ -45,6 +46,7 @@
 		"graphql": "^15.8.0",
 		"ioredis": "^5.0.4",
 		"nodemailer": "^6.7.5",
+		"nodemailer-express-handlebars": "^5.0.0",
 		"pg": "^8.7.3",
 		"redis-commander": "^0.8.0",
 		"type-graphql": "^1.1.1",

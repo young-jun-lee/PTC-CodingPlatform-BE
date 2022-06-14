@@ -28,9 +28,29 @@ export class User extends BaseEntity {
 	username!: string;
 
 	@Field()
+	@Column({ type: "text" })
+	firstName!: string;
+
+	@Field()
+	@Column({ type: "text" })
+	lastName!: string;
+
+	@Field()
 	@Column({ type: "text", unique: true })
 	email!: string;
 
 	@Column({ type: "text" })
 	password!: string;
+
+	// @Field(() => Int)
+	// @Column({ type: "int", })
+	// totalPoints!: number;
+
+	@Field(() => Int)
+	@Column("int", { default: 0 })
+	totalPoints!: number;
+
+	@Field()
+	@Column("boolean", { default: false })
+	isAdmin: boolean = false;
 }
