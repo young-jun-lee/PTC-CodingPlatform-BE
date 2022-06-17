@@ -34,7 +34,7 @@ export class Submissions extends BaseEntity {
 	updatedAt = Date;
 
 	@Field()
-	@Column({ type: "text", unique: true })
+	@Column({ type: "text" })
 	username!: string;
 
 	// @Field()
