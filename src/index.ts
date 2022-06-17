@@ -11,6 +11,7 @@ import { COOKIE_NAME, __prod__ } from "./constants";
 import { UserResolver } from "./resolvers/user";
 import { AppDataSource } from "./typeorm-config";
 import { MyContext } from "./types";
+import { SubmissionsResolver } from "./resolvers/submission";
 // import { Submissions } from "./entities/Submissions";
 // import { User } from "./entities/Users";
 const main = async () => {
@@ -20,7 +21,7 @@ const main = async () => {
 	await AppDataSource.initialize();
 	// await User.delete({});
 	// await Submissions.delete({});
-	await AppDataSource.runMigrations();
+	// await AppDataSource.runMigrations();
 
 	app.set("trust proxy", 1);
 	app.use(
@@ -51,7 +52,7 @@ const main = async () => {
 
 	const apolloServer = new ApolloServer({
 		schema: await buildSchema({
-			resolvers: [UserResolver],
+			resolvers: [UserResolver, SubmissionsResolver],
 			validate: false,
 		}),
 		context: ({ req, res }): MyContext => ({
