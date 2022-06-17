@@ -11,15 +11,16 @@ import { COOKIE_NAME, __prod__ } from "./constants";
 import { UserResolver } from "./resolvers/user";
 import { AppDataSource } from "./typeorm-config";
 import { MyContext } from "./types";
+// import { Submissions } from "./entities/Submissions";
 // import { User } from "./entities/Users";
 const main = async () => {
 	const app = express();
 	const RedisStore = connectRedis(session);
 	const redis = new Redis();
-	//
 	await AppDataSource.initialize();
 	// await User.delete({});
-	await AppDataSource.runMigrations({ transaction: "all" });
+	// await Submissions.delete({});
+	await AppDataSource.runMigrations();
 
 	app.set("trust proxy", 1);
 	app.use(

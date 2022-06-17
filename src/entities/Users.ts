@@ -42,10 +42,6 @@ export class User extends BaseEntity {
 	@Column({ type: "text" })
 	password!: string;
 
-	// @Field(() => Int)
-	// @Column({ type: "int", })
-	// totalPoints!: number;
-
 	@Field(() => Int)
 	@Column("int", { default: 0 })
 	totalPoints!: number;
