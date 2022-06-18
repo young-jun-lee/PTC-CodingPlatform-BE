@@ -40,6 +40,8 @@ export class SubmissionsResolver {
   async presignedURL(
     @Arg('presignedUrlInput') presignedUrlInput: PresignedUrlInput
   ): Promise<String> {
+    //function ()
+
     const { fileName, metadata, path, fileType } = presignedUrlInput;
 
     const cleanedFileName = fileName.replace(/\s+/g, '');
@@ -79,9 +81,60 @@ export class SubmissionsResolver {
         // mimeFileType
       };
       //console.log(returnData);
-      var req: any;
-      req.question = req.body.returnData = returnData;
-    });
+    //   var req: any;
+    //   req.question = req.body.returnData = returnData;
+    // });
+
+    try {
+    //   const { fileKey, userId } = returnData;
+    //   //IMPORTANT: fix the structure of the req info!
+    //   const userId = req.body.userId;
+    //   const fileKey = req.body.returnData.fileKey;
+    //   const question = req.body.metadata.question;
+    //   console.log(userId, fileKey, question);
+    //   console.log('in the mongo creation area');
+
+    //   const existingSubmission = await Submission.findOne({
+    //     userId: userId,
+    //     question: question
+    //   });
+
+    //   console.log('existing sub ', existingSubmission);
+    //   if (!existingSubmission) {
+    //     //create a submission instance
+    //     console.log('create new submission object');
+    //     const newSubmission = new Submission({
+    //       userId: userId,
+    //       question: question,
+    //       //uploadDate: String,
+    //       fileKey: fileKey
+    //     });
+    //     const saveNewSub = await newSubmission.save();
+    //   } else {
+    //     // deleting old object
+    //     var oldFileKey = existingSubmission.fileKey;
+    //     awsDelete(oldFileKey);
+
+    //     // update updateFileKey in db
+    //     const updateFileKey = {
+    //       $set: {
+    //         fileKey: fileKey
+    //       }
+    //     };
+    //     const updateSub = await Submission.updateOne(
+    //       existingSubmission,
+    //       updateFileKey
+    //     );
+    //     //update the existingSubmission document
+    //     //return;
+    //   }
+
+    //   res.status(200).json(req.body.returnData);
+    } catch (error) {
+    //   res
+    //     .status(500)
+    //     .json({ errorMessage: 'Internal Server Error while saving to Mongo' });
+    }
 
     return '1';
   }
