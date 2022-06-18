@@ -1,31 +1,8 @@
 import { Submissions } from "../entities/Submissions";
-import { MyContext } from "src/types";
+import { MyContext } from "../types";
 import { Arg, Ctx, Query } from "type-graphql";
 import { User } from "../entities/Users";
-
-// @ObjectType()
-// // define a custom error containing which field was problematic and a nice message
-// class MessageField {
-// 	@Field()
-// 	field: string;
-// 	@Field()
-// 	message: string;
-// }
-
-// @ObjectType()
-// define a custom object type to return for login, which will return either a FieldError or the user
-// question mark operator indicates that it is an optional field, so the returned response is an object that
-// may include errors and may include a user
-// class UserResponse {
-// 	@Field(() => [MessageField], { nullable: true })
-// 	errors?: MessageField[];
-
-// 	@Field(() => [MessageField], { nullable: true })
-// 	success?: MessageField[];
-
-// 	@Field(() => User, { nullable: true })
-// 	user?: User;
-// }
+import { AppDataSource } from "../typeorm-config";
 
 export class SubmissionsResolver {
 	// Example query to check if user is logged in by checking the cookies
@@ -38,18 +15,31 @@ export class SubmissionsResolver {
 		return User.findOne({ where: { id: req.session.userId } });
 	}
 
-	// @Query(() => Submissions)
-	// async userPoints(
-	// 	@Arg("username") username: string,
-	// 	@Ctx() { req }: MyContext
-	// ): Promise<Submissions> {
-	// 	const points = await Submission.find();
-	// }
-
 	@Query(() => [Submissions], { nullable: true })
 	async userPoints(
 		@Arg("username") username: string
 	): Promise<Submissions[] | null> {
 		return Submissions.find({ where: { username: username } });
+	}
+
+	@Query(() => [Submissions], { nullable: true })
+	async topScores(): Promise<Submissions[] | null> {
+		let user;
+		try {
+			user = await AppDataSource.createQueryBuilder(
+				Submissions,
+				"submissions"
+			)
+				.select(["username", "points"])
+				.addSelect("rank() over (order by points desc)")
+				.orderBy("points", "DESC")
+				.limit(10)
+				.getRawMany();
+			// .execute();
+		} catch (error) {
+			console.log(error.detail);
+		}
+		console.log(user);
+		return user;
 	}
 }

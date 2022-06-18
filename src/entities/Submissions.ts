@@ -37,6 +37,15 @@ export class Submissions extends BaseEntity {
 	@Column({ type: "text" })
 	username!: string;
 
+	@Field()
+	@Column({
+		type: "int",
+		// select: false,
+		// insert: false,
+		// readonly: true,
+		nullable: true,
+	})
+	rank: number;
 	// @Field()
 	// @Column({ type: "enum", enum: [1, 2, 3, 4], default: 1 })
 	// week!: Week;
