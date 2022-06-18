@@ -21,7 +21,7 @@ const main = async () => {
 	await AppDataSource.initialize();
 	// await User.delete({});
 	// await Submissions.delete({});
-	// await AppDataSource.runMigrations();
+	await AppDataSource.runMigrations();
 
 	app.set("trust proxy", 1);
 	app.use(
