@@ -1,38 +1,15 @@
 import argon2 from "argon2";
 
 import { MyContext } from "src/types";
-import { Arg, Ctx, Field, Mutation, ObjectType, Query } from "type-graphql";
+import { Arg, Ctx, Mutation, Query } from "type-graphql";
 import { v4 } from "uuid";
 import { COOKIE_NAME, FORGOT_PASSWORD_PREFIX } from "../constants";
 import { User } from "../entities/Users";
 import { AppDataSource } from "../typeorm-config";
 import { sendEmail } from "../utils/email/sendEmail";
 import { validateRegister } from "../utils/validateRegister";
-import { UsernamePasswordInput } from "./UsernamePasswordInput";
-
-@ObjectType()
-// define a custom error containing which field was problematic and a nice message
-class MessageField {
-	@Field()
-	field: string;
-	@Field()
-	message: string;
-}
-
-@ObjectType()
-// define a custom object type to return for login, which will return either a FieldError or the user
-// question mark operator indicates that it is an optional field, so the returned response is an object that
-// may include errors and may include a user
-class UserResponse {
-	@Field(() => [MessageField], { nullable: true })
-	errors?: MessageField[];
-
-	@Field(() => [MessageField], { nullable: true })
-	success?: MessageField[];
-
-	@Field(() => User, { nullable: true })
-	user?: User;
-}
+import { UsernamePasswordInput } from "./ResolverTypes";
+import { UserResponse } from "./ResolverTypes";
 
 export class UserResolver {
 	// Example query to check if user is logged in by checking the cookies
@@ -48,6 +25,7 @@ export class UserResolver {
 	// custom query to return a list of all existing users in db
 	@Query(() => [User], { nullable: true })
 	async listUsers(): Promise<User[] | null> {
+		console.log("arrived at listusers function");
 		return User.find();
 	}
 
@@ -56,6 +34,7 @@ export class UserResolver {
 		@Arg("options") options: UsernamePasswordInput,
 		@Ctx() { req }: MyContext
 	): Promise<UserResponse> {
+		console.log("arrived at register function");
 		const errors = validateRegister(options);
 
 		if (errors) {
@@ -133,6 +112,7 @@ export class UserResolver {
 		@Arg("password") password: string,
 		@Ctx() { req }: MyContext
 	): Promise<UserResponse> {
+		console.log("arrived at login function");
 		// check to see if user exists in our db
 		// since we're allowing users to login with username or email, if it includes an @ we assume it is an email and set
 		// the given value as an email, otherwise as a username
