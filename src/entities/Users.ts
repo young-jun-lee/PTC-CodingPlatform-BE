@@ -4,9 +4,11 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
+import { Submissions } from "./Submissions";
 
 @ObjectType()
 @Entity()
@@ -49,4 +51,10 @@ export class User extends BaseEntity {
 	@Field()
 	@Column("boolean", { default: false })
 	isAdmin: boolean = false;
+
+	@OneToMany(
+		() => Submissions,
+		(submission: Submissions) => submission.creator
+	)
+	submissions: Submissions[];
 }
