@@ -469,19 +469,6 @@ export class UserResolver {
 			</body>
 			</html>
 			`
-			// `<html>
-			// 	<head>
-			// 		<style>
-			// 		</style>
-			// 	</head>
-			// 	<body>
-			// 		<p>Hello ${username},</p>
-			// 		<p>We've received a request to reset the password for the PTC account associated with ${email}.</p>
-			// 		<p> You can reset your password by clicking the link below:</p>
-			// 		<button>Reset your password					<a href="http://localhost:3000/change-password/${token}">Reset PTC account password</a>
-			// 		</button>
-			// 	</body>
-			// </html>`
 		);
 
 		return {
