@@ -1,5 +1,7 @@
 import { User } from "../entities/Users";
 import { ObjectType, Field, InputType } from "type-graphql";
+import { Submissions } from "../entities/Submissions";
+import { UpdateResult } from "typeorm";
 
 @ObjectType()
 export class TopQuery {
@@ -34,26 +36,71 @@ export class SignedUrlData {
 export class UserResponse {
 	@Field(() => [MessageField], { nullable: true })
 	errors?: MessageField[];
-
 	@Field(() => [MessageField], { nullable: true })
 	success?: MessageField[];
-
 	@Field(() => User, { nullable: true })
 	user?: User;
 }
 
 @ObjectType()
-export class SubmissionResponse {
+export class S3SubmissionResponse {
 	@Field(() => [MessageField], { nullable: true })
 	errors?: MessageField[];
-
 	@Field(() => SignedUrlData, { nullable: true })
 	uploadData?: SignedUrlData;
+}
+
+@ObjectType()
+export class CreateSubmissionResponse {
+	@Field(() => [MessageField], { nullable: true })
+	errors?: MessageField[];
+	@Field(() => [MessageField], { nullable: true })
+	success?: MessageField[];
+	@Field(() => Submissions, { nullable: true })
+	submission?: Submissions;
+}
+
+@ObjectType()
+export class ExistingSubmissionResponse {
+	@Field(() => [MessageField], { nullable: true })
+	errors?: MessageField[];
+	@Field()
+	existing: boolean;
+	@Field()
+	id?: number;
+	@Field()
+	creatorId?: number;
+	@Field()
+	updates?: number;
 }
 
 /**
  * Input Types used as Args in resolvers
  */
+
+@InputType()
+export class ViewFileInput {
+	@Field()
+	userId: string;
+	@Field()
+	question: string;
+}
+
+@InputType()
+export class CreateSubmissionInput {
+	@Field()
+	existing: boolean;
+	@Field()
+	id?: number;
+	@Field()
+	creatorId?: number;
+	@Field()
+	updates?: number;
+	@Field()
+	question: string;
+	@Field()
+	fileKey: string;
+}
 
 @InputType()
 class Metadata {
