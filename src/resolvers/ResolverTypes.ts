@@ -66,11 +66,11 @@ export class ExistingSubmissionResponse {
 	errors?: MessageField[];
 	@Field()
 	existing: boolean;
-	@Field()
+	@Field({ nullable: true })
 	id?: number;
-	@Field()
+	@Field({ nullable: true })
 	creatorId?: number;
-	@Field()
+	@Field({ nullable: true })
 	updates?: number;
 }
 
@@ -90,11 +90,11 @@ export class ViewFileInput {
 export class CreateSubmissionInput {
 	@Field()
 	existing: boolean;
-	@Field()
+	@Field({ nullable: true })
 	id?: number;
-	@Field()
+	@Field({ nullable: true })
 	creatorId?: number;
-	@Field()
+	@Field({ nullable: true })
 	updates?: number;
 	@Field()
 	question: string;

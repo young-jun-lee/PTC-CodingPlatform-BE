@@ -136,7 +136,9 @@ export class SubmissionsResolver {
 		@Ctx() { req }: MyContext
 	): Promise<CreateSubmissionResponse> {
 		let newSubmission;
+		// console.log(options.updates);
 		if (options.existing && options.updates !== undefined) {
+			console.log("here");
 			newSubmission = await Submissions.update(
 				{
 					id: options.id,
@@ -158,10 +160,11 @@ export class SubmissionsResolver {
 				],
 			};
 		}
-
+		console.log(req.session.userId);
 		// check for existing submission and <= 3
 		newSubmission = await Submissions.create({
 			...options,
+			updates: 0,
 			creatorId: req.session.userId,
 			// creatorId: 9,
 		}).save();
