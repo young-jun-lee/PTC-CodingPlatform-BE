@@ -10,6 +10,7 @@ import {
 	CreateSubmissionInput,
 	CreateSubmissionResponse,
 	ExistingSubmissionResponse,
+	MessageField,
 	PresignedUrlInput,
 	S3SubmissionResponse,
 	TopQuery,
@@ -39,10 +40,8 @@ export class SubmissionsResolver {
 		});
 	}
 
-	@Mutation(() => CreateSubmissionResponse, { nullable: true })
-	async deleteFile(
-		@Arg("fileKey") fileKey: string
-	): Promise<S3SubmissionResponse | null> {
+	@Mutation(() => UserResponse)
+	async deleteFile(@Arg("fileKey") fileKey: string): Promise<UserResponse> {
 		const s3 = new S3({
 			accessKeyId: process.env.AWS_USER_KEY,
 			secretAccessKey: process.env.AWS_SECRET_KEY,
@@ -53,11 +52,28 @@ export class SubmissionsResolver {
 			Key: fileKey,
 		};
 
-		const returnData = s3.deleteObject(s3Params, function (_err, data) {
-			console.log(data);
-			console.log("successfully deleted");
+		s3.deleteObject(s3Params, function (err, data) {
+			console.log("ERR: ", err);
+			console.log("DATA: ", data);
+			if (err) {
+				return {
+					error: [
+						{
+							field: "Delete File",
+							message: "Delete failed.",
+						},
+					],
+				};
+			}
 		});
-		return returnData;
+		return {
+			success: [
+				{
+					field: "Delete File",
+					message: "Successfully deleted previous file.",
+				},
+			],
+		};
 	}
 
 	@Mutation(() => S3SubmissionResponse, { nullable: true })
@@ -115,12 +131,12 @@ export class SubmissionsResolver {
 		@Ctx() { req }: MyContext
 	): Promise<ExistingSubmissionResponse> {
 		const MAX_UPDATES = 3;
-		console.log(req.sessionID);
+		// console.log(req.sessionID);
 		const existingSubmission = await Submissions.findOne({
 			where: { creatorId: req.session.userId, question },
 			// where: { creatorId: 9, question },
 		});
-		console.log(existingSubmission);
+		// console.log(existingSubmission);
 		if (existingSubmission) {
 			if (existingSubmission.updates < MAX_UPDATES) {
 				return {
@@ -128,6 +144,7 @@ export class SubmissionsResolver {
 					id: existingSubmission.id,
 					creatorId: req.session.userId,
 					updates: existingSubmission.updates,
+					fileKey: existingSubmission.fileKey,
 				};
 			} else {
 				return {
@@ -178,7 +195,7 @@ export class SubmissionsResolver {
 				],
 			};
 		}
-		console.log(req.session.userId);
+		// console.log(req.session.userId);
 		// check for existing submission and <= 3
 		newSubmission = await Submissions.create({
 			...options,
@@ -193,9 +210,9 @@ export class SubmissionsResolver {
 	async viewFile(
 		@Arg("viewFileInput") viewFileInput: ViewFileInput
 	): Promise<S3SubmissionResponse | null> {
-		console.log("arrived here");
+		// console.log("arrived here");
 		const { userId, question } = viewFileInput;
-		console.log(userId);
+		// console.log(userId);
 
 		const s3 = new S3({
 			accessKeyId: process.env.AWS_USER_KEY,
@@ -234,7 +251,7 @@ export class SubmissionsResolver {
 	}
 	@Query(() => [TopQuery], { nullable: true })
 	async topScores(): Promise<TopQuery[] | null> {
-		console.log("arrived at topscores");
+		// console.log("arrived at topscores");
 		const RANK_LIMIT = 10;
 		try {
 			const user: TopQuery[] = await AppDataSource.createQueryBuilder(
@@ -247,10 +264,10 @@ export class SubmissionsResolver {
 				.limit(RANK_LIMIT)
 				.getRawMany();
 			// .execute();
-			console.log(user);
+			// console.log(user);
 			return user;
 		} catch (error) {
-			console.log(error.detail);
+			// console.log(error.detail);
 		}
 		return null;
 	}

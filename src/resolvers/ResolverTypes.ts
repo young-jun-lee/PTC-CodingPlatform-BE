@@ -72,6 +72,8 @@ export class ExistingSubmissionResponse {
 	creatorId?: number;
 	@Field({ nullable: true })
 	updates?: number;
+	@Field({ nullable: true })
+	fileKey?: string;
 }
 
 /**
@@ -107,7 +109,7 @@ class Metadata {
 	@Field()
 	question: string;
 	@Field()
-	email: string;
+	username: string;
 }
 
 @InputType()
