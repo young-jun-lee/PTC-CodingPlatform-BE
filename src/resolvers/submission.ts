@@ -185,7 +185,6 @@ export class SubmissionsResolver {
 					fileKey: options.fileKey,
 				}
 			);
-
 			return {
 				success: [
 					{
@@ -208,11 +207,29 @@ export class SubmissionsResolver {
 
 	@Mutation(() => S3SubmissionResponse, { nullable: true })
 	async viewFile(
-		@Arg("viewFileInput") viewFileInput: ViewFileInput
+		@Arg("viewFileInput") viewFileInput: ViewFileInput,
+		@Ctx() { req }: MyContext
 	): Promise<S3SubmissionResponse | null> {
-		// console.log("arrived here");
+		console.log("arrived here");
 		const { userId, question } = viewFileInput;
-		// console.log(userId);
+		console.log(userId);
+
+		// get the file ID from postgresql
+		const existingSubmission = await Submissions.findOne({
+			where: { creatorId: req.session.userId, question },
+		});
+
+		// if no submission - return none
+		if (!existingSubmission) {
+			return {
+				errors: [
+					{
+						field: " signedUrl",
+						message: `Error: could not find file for this submission`,
+					},
+				],
+			};
+		}
 
 		const s3 = new S3({
 			accessKeyId: process.env.AWS_USER_KEY,
@@ -220,19 +237,17 @@ export class SubmissionsResolver {
 			region: process.env.S3_REGION,
 		});
 
-		let fileKey: string;
-
 		const s3Params = {
 			Bucket: process.env.PUBLIC_S3_BUCKET,
-			Key: fileKey,
-			Metadata: metadata,
+			Key: existingSubmission.fileKey,
+			//Metadata: metadata,
 			Expires: 120,
 			// ContentType: "text/plain",
 			// ACL: "public-read",
 		};
 		let s3Url;
 		try {
-			s3Url = s3.getSignedUrl("putObject", s3Params);
+			s3Url = s3.getSignedUrl("getObject", s3Params);
 		} catch (err) {
 			return {
 				errors: [
@@ -245,7 +260,7 @@ export class SubmissionsResolver {
 		}
 		const uploadData = {
 			signedRequest: s3Url,
-			fileKey,
+			fileKey: existingSubmission.fileKey,
 		};
 		return { uploadData };
 	}
