@@ -26,10 +26,6 @@ export class Submissions extends BaseEntity {
 	@UpdateDateColumn()
 	updatedAt: Date;
 
-	// @Field()
-	// @Column({ type: "text" })
-	// username!: string;
-
 	@Field()
 	@Column({
 		type: "int",

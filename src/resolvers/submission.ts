@@ -34,18 +34,36 @@ export class SubmissionsResolver {
 		// @Arg("username") username: string,
 		@Ctx() { req }: MyContext
 	): Promise<Submissions[] | null> {
-		// return Submissions.find({ where: { username: username } });
 		return Submissions.find({
 			where: { creator: { id: req.session.userId } },
 		});
 	}
 
-	// @Query(() => SignedUrlData, { nullable: true })
+	@Mutation(() => CreateSubmissionResponse, { nullable: true })
+	async deleteFile(
+		@Arg("fileKey") fileKey: string
+	): Promise<S3SubmissionResponse | null> {
+		const s3 = new S3({
+			accessKeyId: process.env.AWS_USER_KEY,
+			secretAccessKey: process.env.AWS_SECRET_KEY,
+			region: process.env.S3_REGION,
+		});
+		const s3Params = {
+			Bucket: process.env.PUBLIC_S3_BUCKET,
+			Key: fileKey,
+		};
+
+		const returnData = s3.deleteObject(s3Params, function (_err, data) {
+			console.log(data);
+			console.log("successfully deleted");
+		});
+		return returnData;
+	}
+
 	@Mutation(() => S3SubmissionResponse, { nullable: true })
 	async uploadFile(
 		@Arg("presignedUrlInput") presignedUrlInput: PresignedUrlInput
 	): Promise<S3SubmissionResponse | null> {
-		console.log("arrived here");
 		const { fileName, metadata, path, fileType } = presignedUrlInput;
 
 		const cleanedFileName = fileName.replace(/\s+/g, "");
@@ -56,7 +74,7 @@ export class SubmissionsResolver {
 			region: process.env.S3_REGION,
 		});
 
-		var fileKey: string;
+		let fileKey: string;
 		if (path === "/") fileKey = `misc/${uuidv4()}-${cleanedFileName}`;
 		else fileKey = `${path}/${uuidv4()}-${cleanedFileName}`;
 
@@ -171,54 +189,53 @@ export class SubmissionsResolver {
 		return { submission: newSubmission };
 	}
 
-	// @Mutation(() => SubmissionResponse, { nullable: true })
-	// async viewFile(
-	// 	@Arg("viewFileInput") viewFileInput: ViewFileInput
-	// ): Promise<SubmissionResponse | null> {
-	// 	console.log("arrived here");
-	// 	const { userId, question } = viewFileInput;
-	// 	console.log(userId);
+	@Mutation(() => S3SubmissionResponse, { nullable: true })
+	async viewFile(
+		@Arg("viewFileInput") viewFileInput: ViewFileInput
+	): Promise<S3SubmissionResponse | null> {
+		console.log("arrived here");
+		const { userId, question } = viewFileInput;
+		console.log(userId);
 
-	// 	const s3 = new S3({
-	// 		accessKeyId: process.env.AWS_USER_KEY,
-	// 		secretAccessKey: process.env.AWS_SECRET_KEY,
-	// 		region: process.env.S3_REGION,
-	// 	});
+		const s3 = new S3({
+			accessKeyId: process.env.AWS_USER_KEY,
+			secretAccessKey: process.env.AWS_SECRET_KEY,
+			region: process.env.S3_REGION,
+		});
 
-	// 	var fileKey: string;
-	// 	if (path === "/") fileKey = `misc/${uuidv4()}-${cleanedFileName}`;
-	// 	else fileKey = `${path}/${uuidv4()}-${cleanedFileName}`;
+		let fileKey: string;
 
-	// 	const s3Params = {
-	// 		Bucket: process.env.PUBLIC_S3_BUCKET,
-	// 		Key: fileKey,
-	// 		Metadata: metadata,
-	// 		Expires: 120,
-	// 		// ContentType: "text/plain",
-	// 		// ACL: "public-read",
-	// 	};
-	// 	let s3Url;
-	// 	try {
-	// 		s3Url = s3.getSignedUrl("putObject", s3Params);
-	// 	} catch (err) {
-	// 		return {
-	// 			errors: [
-	// 				{
-	// 					field: " signedUrl",
-	// 					message: `Error: could not generate S3 presigned url - ${err}`,
-	// 				},
-	// 			],
-	// 		};
-	// 	}
-	// 	const uploadData = {
-	// 		signedRequest: s3Url,
-	// 		fileKey,
-	// 	};
-	// 	return { uploadData };
-	// }
+		const s3Params = {
+			Bucket: process.env.PUBLIC_S3_BUCKET,
+			Key: fileKey,
+			Metadata: metadata,
+			Expires: 120,
+			// ContentType: "text/plain",
+			// ACL: "public-read",
+		};
+		let s3Url;
+		try {
+			s3Url = s3.getSignedUrl("putObject", s3Params);
+		} catch (err) {
+			return {
+				errors: [
+					{
+						field: " signedUrl",
+						message: `Error: could not generate S3 presigned url - ${err}`,
+					},
+				],
+			};
+		}
+		const uploadData = {
+			signedRequest: s3Url,
+			fileKey,
+		};
+		return { uploadData };
+	}
 	@Query(() => [TopQuery], { nullable: true })
 	async topScores(): Promise<TopQuery[] | null> {
 		console.log("arrived at topscores");
+		const RANK_LIMIT = 10;
 		try {
 			const user: TopQuery[] = await AppDataSource.createQueryBuilder(
 				Submissions,
@@ -227,7 +244,7 @@ export class SubmissionsResolver {
 				.select(["username", "points"])
 				.addSelect("rank() over (order by points desc)")
 				.orderBy("points", "DESC")
-				.limit(10)
+				.limit(RANK_LIMIT)
 				.getRawMany();
 			// .execute();
 			console.log(user);
