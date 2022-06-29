@@ -1,4 +1,5 @@
 import { S3 } from "aws-sdk";
+
 import mime from "mime";
 import { Arg, Ctx, Mutation, Query } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
@@ -82,12 +83,16 @@ export class SubmissionsResolver {
 	): Promise<S3SubmissionResponse | null> {
 		const { fileName, metadata, path, fileType } = presignedUrlInput;
 
+		console.log("REGION: ", process.env.S3_REGION);
+
 		const cleanedFileName = fileName.replace(/\s+/g, "");
 		const mimeFileType = mime.lookup(fileType);
 		const s3 = new S3({
 			accessKeyId: process.env.AWS_USER_KEY,
 			secretAccessKey: process.env.AWS_SECRET_KEY,
 			region: process.env.S3_REGION,
+			apiVersion: "2006-03-01",
+			signatureVersion: "v4",
 		});
 
 		let fileKey: string;
