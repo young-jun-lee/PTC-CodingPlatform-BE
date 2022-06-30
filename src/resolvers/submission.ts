@@ -1,7 +1,8 @@
 import { S3 } from "aws-sdk";
 
 import mime from "mime";
-import { Arg, Ctx, Mutation, Query } from "type-graphql";
+import { isAuth } from "../middleware/useIsAuth";
+import { Arg, Ctx, Mutation, Query, UseMiddleware } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
 import { Submissions } from "../entities/Submissions";
 import { User } from "../entities/Users";
@@ -32,10 +33,8 @@ export class SubmissionsResolver {
 	}
 
 	@Query(() => [Submissions], { nullable: true })
-	async userPoints(
-		// @Arg("username") username: string,
-		@Ctx() { req }: MyContext
-	): Promise<Submissions[] | null> {
+	@UseMiddleware(isAuth)
+	async userPoints(@Ctx() { req }: MyContext): Promise<Submissions[] | null> {
 		return Submissions.find({
 			where: { creator: { id: req.session.userId } },
 		});
@@ -78,6 +77,7 @@ export class SubmissionsResolver {
 	}
 
 	@Mutation(() => S3SubmissionResponse, { nullable: true })
+	@UseMiddleware(isAuth)
 	async uploadFile(
 		@Arg("presignedUrlInput") presignedUrlInput: PresignedUrlInput
 	): Promise<S3SubmissionResponse | null> {
@@ -128,8 +128,8 @@ export class SubmissionsResolver {
 		};
 		return { uploadData };
 	}
-
 	@Mutation(() => ExistingSubmissionResponse)
+	@UseMiddleware(isAuth)
 	async existingSubmission(
 		@Arg("question")
 		question: string,
@@ -211,6 +211,7 @@ export class SubmissionsResolver {
 	}
 
 	@Mutation(() => S3SubmissionResponse, { nullable: true })
+	@UseMiddleware(isAuth)
 	async viewFile(
 		@Arg("viewFileInput") viewFileInput: ViewFileInput,
 		@Ctx() { req }: MyContext
@@ -271,7 +272,6 @@ export class SubmissionsResolver {
 	}
 	@Query(() => [TopQuery], { nullable: true })
 	async topScores(): Promise<TopQuery[] | null> {
-		// console.log("arrived at topscores");
 		const RANK_LIMIT = 10;
 		try {
 			const user: TopQuery[] = await AppDataSource.createQueryBuilder(
