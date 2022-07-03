@@ -33,7 +33,7 @@ export class SubmissionsResolver {
 	}
 
 	@Query(() => [Submissions], { nullable: true })
-	@UseMiddleware(isAuth)
+	// @UseMiddleware(isAuth)
 	async userPoints(@Ctx() { req }: MyContext): Promise<Submissions[] | null> {
 		return Submissions.find({
 			where: { creator: { id: req.session.userId } },
@@ -129,7 +129,7 @@ export class SubmissionsResolver {
 		return { uploadData };
 	}
 	@Mutation(() => ExistingSubmissionResponse)
-	@UseMiddleware(isAuth)
+	// @UseMiddleware(isAuth)
 	async existingSubmission(
 		@Arg("question")
 		question: string,
@@ -211,7 +211,7 @@ export class SubmissionsResolver {
 	}
 
 	@Mutation(() => S3SubmissionResponse, { nullable: true })
-	@UseMiddleware(isAuth)
+	// @UseMiddleware(isAuth)
 	async viewFile(
 		@Arg("viewFileInput") viewFileInput: ViewFileInput,
 		@Ctx() { req }: MyContext
