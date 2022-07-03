@@ -1,10 +1,10 @@
 {
 	"name": "2022-codingplatform-be",
 	"version": "1.0.0",
+	"description": "",
 	"engines": {
 		"node": "16.x"
 	},
-	"description": "",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
