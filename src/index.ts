@@ -17,7 +17,7 @@ import { SubmissionsResolver } from "./resolvers/submission";
 const main = async () => {
 	const app = express();
 	const RedisStore = connectRedis(session);
-	const redis = new Redis();
+	const redis = new Redis(process.env.REDIS_URL as string);
 	await AppDataSource.initialize();
 	// await User.delete({});
 	// await Submissions.delete({});
@@ -72,5 +72,3 @@ const main = async () => {
 main().catch((err) => {
 	console.error(err);
 });
-
-
