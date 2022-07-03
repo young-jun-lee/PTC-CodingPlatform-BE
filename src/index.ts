@@ -7,7 +7,7 @@ import Redis from "ioredis";
 import connectRedis from "connect-redis";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-import { COOKIE_NAME, __prod__ } from "./constants";
+import { COOKIE_NAME, __prod__, PORT } from "./constants";
 import { UserResolver } from "./resolvers/user";
 import { AppDataSource } from "./typeorm-config";
 import { MyContext } from "./types";
@@ -64,8 +64,8 @@ const main = async () => {
 	await apolloServer.start();
 	apolloServer.applyMiddleware({ app, cors: false });
 
-	app.listen(4000, () => {
-		console.log("server started on localhost:4000");
+	app.listen(PORT, () => {
+		console.log(`server started on ${PORT}`);
 	});
 };
 
