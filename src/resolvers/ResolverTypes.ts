@@ -1,7 +1,6 @@
 import { User } from "../entities/Users";
 import { ObjectType, Field, InputType } from "type-graphql";
 import { Submissions } from "../entities/Submissions";
-import { UpdateResult } from "typeorm";
 
 @ObjectType()
 export class TopQuery {
