@@ -9,7 +9,7 @@ export class TopQuery {
 	@Field()
 	rank: number;
 	@Field()
-	points: number;
+	totalPoints: number;
 }
 
 // define a custom error containing which field was problematic and a nice message
@@ -135,4 +135,11 @@ export class UsernamePasswordInput {
 	email: string;
 	@Field()
 	password: string;
+}
+@InputType()
+export class UpdatePointsInput {
+	@Field()
+	points: number;
+	@Field()
+	fileKey: string;
 }

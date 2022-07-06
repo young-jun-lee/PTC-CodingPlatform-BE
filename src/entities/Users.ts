@@ -48,6 +48,13 @@ export class User extends BaseEntity {
 	@Column("int", { default: 0 })
 	totalPoints!: number;
 
+	// @Field()
+	// @Column({
+	// 	type: "int",
+	// 	nullable: true,
+	// })
+	// rank: number;
+
 	@Field()
 	@Column("boolean", { default: false })
 	isAdmin: boolean = false;

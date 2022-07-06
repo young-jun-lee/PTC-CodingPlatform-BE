@@ -17,6 +17,7 @@ import {
 	S3SubmissionResponse,
 	TopQuery,
 	UserResponse,
+	UpdatePointsInput,
 } from "./ResolverTypes";
 
 export class SubmissionsResolver {
@@ -267,23 +268,59 @@ export class SubmissionsResolver {
 	}
 	@Query(() => [TopQuery], { nullable: true })
 	async topScores(): Promise<TopQuery[] | null> {
+		console.log("arrived here ");
 		const RANK_LIMIT = 10;
 		try {
-			const user: TopQuery[] = await AppDataSource.createQueryBuilder(
-				Submissions,
-				"submissions"
-			)
-				.select(["username", "points"])
-				.addSelect("rank() over (order by points desc)")
-				.orderBy("points", "DESC")
-				.limit(RANK_LIMIT)
-				.getRawMany();
-			// .execute();
-			// console.log(user);
+			const user: TopQuery[] = await AppDataSource.query(`
+			SELECT username, "totalPoints", rank() over (order by "totalPoints" desc)  FROM "user" LIMIT 10;
+			`);
+			console.log(typeof user);
+			console.log("user: ", user);
 			return user;
 		} catch (error) {
-			// console.log(error.detail);
+			console.log(error);
+			console.log(error.detail);
 		}
 		return null;
+	}
+
+	@Mutation(() => Boolean)
+	async updatePoints(
+		@Arg("rows", (type) => [UpdatePointsInput])
+		rows: UpdatePointsInput[],
+		@Ctx() { req }: MyContext
+	): Promise<Boolean> {
+		const table = "submissions";
+		// const recordRows = {
+
+		// };
+		let updateTuples = "";
+		for (var i = 0, l = rows.length; i < l; i++) {
+			if (i !== l - 1) {
+				updateTuples += `('${rows[i].fileKey}', ${rows[i].points}),`;
+			} else {
+				updateTuples += `('${rows[i].fileKey}', ${rows[i].points})`;
+			}
+		}
+
+		const updateQuery = `
+		update submissions as m set
+		points = c.points
+		from (values
+		${updateTuples}
+		) as c("fileKey", points)
+		where c."fileKey" = m."fileKey"
+		`;
+
+		try {
+			const user = await AppDataSource.query(updateQuery);
+			console.log(typeof user);
+			// console.log("user: ", user);
+			return user;
+		} catch (error) {
+			console.log(error);
+			console.log(error.detail);
+		}
+		return true;
 	}
 }
