@@ -18,6 +18,7 @@ import {
 	TopQuery,
 	UserResponse,
 	UpdatePointsInput,
+	MessageField,
 } from "./ResolverTypes";
 
 export class SubmissionsResolver {
@@ -284,16 +285,14 @@ export class SubmissionsResolver {
 		return null;
 	}
 
-	@Mutation(() => Boolean)
+	@Mutation(() => MessageField)
 	async updatePoints(
 		@Arg("rows", (type) => [UpdatePointsInput])
 		rows: UpdatePointsInput[],
 		@Ctx() { req }: MyContext
-	): Promise<Boolean> {
+	): Promise<MessageField> {
 		const table = "submissions";
-		// const recordRows = {
 
-		// };
 		let updateTuples = "";
 		for (var i = 0, l = rows.length; i < l; i++) {
 			if (i !== l - 1) {
@@ -314,13 +313,15 @@ export class SubmissionsResolver {
 
 		try {
 			const user = await AppDataSource.query(updateQuery);
-			console.log(typeof user);
-			// console.log("user: ", user);
-			return user;
+			return {
+				field: "Update Scores",
+				message: "Successfully updated user scores",
+			};
 		} catch (error) {
-			console.log(error);
-			console.log(error.detail);
+			return {
+				field: "Update Scores",
+				message: `Failed to update scores: ${error}`,
+			};
 		}
-		return true;
 	}
 }
