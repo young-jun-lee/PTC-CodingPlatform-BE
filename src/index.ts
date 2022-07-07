@@ -30,6 +30,7 @@ const main = async () => {
 			origin: [
 				"http://localhost:3000",
 				"https://studio.apollographql.com",
+				"https://s3.amazonaws.com/",
 				process.env.CLIENT_URL as string,
 			],
 			credentials: true,
