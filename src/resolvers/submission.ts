@@ -3,6 +3,7 @@ import { S3 } from "aws-sdk";
 
 import mime from "mime";
 import { isAuth } from "../middleware/useIsAuth";
+import { isAdmin } from "../middleware/useIsAdmin";
 import { Arg, Ctx, Mutation, Query, UseMiddleware } from "type-graphql";
 import { v4 as uuidv4 } from "uuid";
 import { Submissions } from "../entities/Submissions";
@@ -284,12 +285,11 @@ export class SubmissionsResolver {
 		}
 		return null;
 	}
-
+	@UseMiddleware(isAdmin)
 	@Mutation(() => MessageField)
 	async updatePoints(
 		@Arg("rows", (type) => [UpdatePointsInput])
-		rows: UpdatePointsInput[],
-		@Ctx() { req }: MyContext
+		rows: UpdatePointsInput[]
 	): Promise<MessageField> {
 		const table = "submissions";
 
@@ -313,13 +313,16 @@ export class SubmissionsResolver {
 
 		try {
 			const user = await AppDataSource.query(updateQuery);
-			return {
-				field: "Update Scores",
-				message: "Successfully updated user scores",
-			};
+			if (user[1] !== 0) {
+				return {
+					field: "Update Scores Success",
+					message: "Successfully updated user scores",
+				};
+			}
+			throw new Error("No rows updated");
 		} catch (error) {
 			return {
-				field: "Update Scores",
+				field: "Update Scores Fail",
 				message: `Failed to update scores: ${error}`,
 			};
 		}

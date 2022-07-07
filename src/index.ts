@@ -18,6 +18,7 @@ const main = async () => {
 	const app = express();
 	const RedisStore = connectRedis(session);
 	const redis = new Redis(process.env.REDIS_URL as string);
+	// const redis = new Redis();
 	await AppDataSource.initialize();
 	// await User.delete({});
 	// await Submissions.delete({});
@@ -29,6 +30,7 @@ const main = async () => {
 			origin: [
 				"http://localhost:3000",
 				"https://studio.apollographql.com",
+				process.env.CLIENT_URL as string,
 			],
 			credentials: true,
 		}),
