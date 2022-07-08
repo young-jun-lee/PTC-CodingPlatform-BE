@@ -308,7 +308,7 @@ export class SubmissionsResolver {
 		from (values
 		${updateTuples}
 		) as c("fileKey", points)
-		where c."fileKey" = m."fileKey"
+		where m."fileKey" like '%'  || c."fileKey" || '%';
 		`;
 
 		try {
