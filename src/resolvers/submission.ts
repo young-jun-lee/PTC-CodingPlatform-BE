@@ -178,7 +178,6 @@ export class SubmissionsResolver {
 		@Ctx() { req }: MyContext
 	): Promise<CreateSubmissionResponse> {
 		let newSubmission;
-		// console.log(options.updates);
 		if (options.existing && options.updates !== undefined) {
 			console.log("here");
 			newSubmission = await Submissions.update(
@@ -324,6 +323,32 @@ export class SubmissionsResolver {
 			return {
 				field: "Update Scores Fail",
 				message: `Failed to update scores: ${error}`,
+			};
+		}
+	}
+	@UseMiddleware(isAdmin)
+	@Mutation(() => MessageField)
+	async updateTotalPoints(): Promise<MessageField> {
+		const updateQuery = `UPDATE public.user set "totalPoints" = a.total 
+		FROM (SELECT "creatorId", SUM(points) as total
+		FROM submissions
+		GROUP BY "creatorId") a
+		WHERE public.user.id = a."creatorId";
+		`;
+
+		try {
+			const updatePoints = await AppDataSource.query(updateQuery);
+			if (updatePoints[1] !== 0) {
+				return {
+					field: "Update Scores Success",
+					message: "Successfully updated user total points",
+				};
+			}
+			throw new Error("No rows updated");
+		} catch (error) {
+			return {
+				field: "Update Scores Fail",
+				message: `Failed to update points: ${error}`,
 			};
 		}
 	}
