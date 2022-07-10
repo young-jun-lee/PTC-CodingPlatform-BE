@@ -25,7 +25,6 @@ export class UserResolver {
 	// custom query to return a list of all existing users in db
 	@Query(() => [User], { nullable: true })
 	async listUsers(): Promise<User[] | null> {
-		
 		return User.find();
 	}
 
@@ -34,7 +33,6 @@ export class UserResolver {
 		@Arg("options") options: UsernamePasswordInput,
 		@Ctx() { req }: MyContext
 	): Promise<UserResponse> {
-		
 		const errors = validateRegister(options);
 
 		if (errors) {
@@ -59,7 +57,6 @@ export class UserResolver {
 				.execute();
 			user = result.raw[0];
 		} catch (error) {
-			
 			// try catch block to handle edge cases such as a user is already registered with the same name
 			// error code 23505 means duplicate key exists
 			if (error.code === "23505" && error.detail.includes("username")) {
@@ -661,7 +658,7 @@ export class UserResolver {
 			};
 		}
 		const key = FORGOT_PASSWORD_PREFIX + token;
-		
+
 		const userId = await redis.get(key);
 		if (!userId) {
 			return {
@@ -1383,7 +1380,7 @@ export class UserResolver {
 																	bgcolor="#1b9cf7"
 																>
 																	<a
-																		href="http://localhost:3000/change-password/${token}"
+																		href="https://coding-challenge.projecttechconferences.com/change-password/${token}"
 																		target="_blank"
 																		style="
 																			font-size: 20px;
@@ -1445,10 +1442,10 @@ export class UserResolver {
 										>
 											<p style="margin: 0">
 												<a
-													href="http://localhost:3000/change-password/${token}"
+													href="https://coding-challenge.projecttechconferences.com/change-password/${token}"
 													target="_blank"
 													style="color: #4a35ea"
-													>http://localhost:3000/change-password/${token}</a
+													>https://coding-challenge.projecttechconferences.com/change-password/${token}</a
 												>
 											</p>
 										</td>
@@ -1543,7 +1540,7 @@ export class UserResolver {
 												>
 												-
 												<a
-													href="http://localhost:3000"
+													href="https://coding-challenge.projecttechconferences.com"
 													target="_blank"
 													style="color: #111111; font-weight: 700"
 													>PTC Coding Challenge</a
