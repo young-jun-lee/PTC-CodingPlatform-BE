@@ -89,17 +89,499 @@ export class UserResolver {
 		await sendEmail(
 			options.email,
 			"PTC Coding Challenge - Account Creation Successful",
-			`<html>
-			<head>
-			  <style>
-			  </style>
-			</head>
-			<body>
-			  <p>Hi ${username},</p>
-			  <p>Your account creation was successful! </p> 
-			  <p> Welcome to the PTC Coding Challenge</p>
-			</body>
-		  </html>`
+			`<!DOCTYPE html>
+			<html>
+				<head>
+					<title></title>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+					<meta name="viewport" content="width=device-width, initial-scale=1" />
+					<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+					<style type="text/css">
+						/* CLIENT-SPECIFIC STYLES */
+						body,
+						table,
+						td,
+						a {
+							-webkit-text-size-adjust: 100%;
+							-ms-text-size-adjust: 100%;
+						}
+						table,
+						td {
+							mso-table-lspace: 0pt;
+							mso-table-rspace: 0pt;
+						}
+						img {
+							-ms-interpolation-mode: bicubic;
+						}
+			
+						/* RESET STYLES */
+						img {
+							border: 0;
+							height: auto;
+							line-height: 100%;
+							outline: none;
+							text-decoration: none;
+						}
+						table {
+							border-collapse: collapse !important;
+						}
+						body {
+							height: 100% !important;
+							margin: 0 !important;
+							padding: 0 !important;
+							width: 100% !important;
+						}
+			
+						/* iOS BLUE LINKS */
+						a[x-apple-data-detectors] {
+							color: inherit !important;
+							text-decoration: none !important;
+							font-size: inherit !important;
+							font-family: inherit !important;
+							font-weight: inherit !important;
+							line-height: inherit !important;
+						}
+			
+						/* MOBILE STYLES */
+						@media screen and (max-width: 600px) {
+							h1 {
+								font-size: 32px !important;
+								line-height: 32px !important;
+							}
+						}
+			
+						/* ANDROID CENTER FIX */
+						div[style*="margin: 16px 0;"] {
+							margin: 0 !important;
+						}
+					</style>
+			
+					<style type="text/css"></style>
+				</head>
+				<body
+					style="
+						background-color: #f4f4f4;
+						margin: 0 !important;
+						padding: 0 !important;
+					"
+				>
+					<!-- HIDDEN PREHEADER TEXT -->
+					<div
+						style="
+							display: none;
+							font-size: 1px;
+							color: #fefefe;
+							line-height: 1px;
+							font-family: Helvetica, Arial, sans-serif;
+							max-height: 0px;
+							max-width: 0px;
+							opacity: 0;
+							overflow: hidden;
+						"
+					>
+						Reset Password
+					</div>
+			
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+						<!-- LOGO -->
+						<tr>
+							<td bgcolor="#f4f4f4" align="center">
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<tr>
+										<td
+											align="center"
+											valign="top"
+											style="padding: 40px 10px 40px 10px"
+										>
+											<a
+												href="https://www.projecttechconferences.com/"
+												target="_blank"
+											>
+												<img
+													alt="Logo"
+													src="https://static.wixstatic.com/media/6ec599_870d216ee50e4be8afbba1edafcfe4f3~mv2_d_2048_2048_s_2.png/v1/fill/w_160,h_149,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/PTC%20Logo%20Transparent.png"
+													width="169"
+													height="40"
+													style="
+														display: block;
+														width: 169px;
+														max-width: 169px;
+														min-width: 169px;
+														font-family: Helvetica, Arial,
+															sans-serif;
+														color: #ffffff;
+														font-size: 18px;
+													"
+													border="0"
+												/>
+											</a>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+						<!-- HERO -->
+						<tr>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="center"
+											valign="top"
+											style="
+												padding: 40px 20px 20px 20px;
+												border-radius: 4px 4px 0px 0px;
+												color: #111111;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 48px;
+												font-weight: 400;
+												letter-spacing: 4px;
+												line-height: 48px;
+											"
+										>
+											<h1
+												style="
+													font-size: 28px;
+													font-weight: 400;
+													margin: 0;
+													letter-spacing: 0px;
+												"
+											>
+												Welcome to the PTC Coding Challenge
+											</h1>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+						<!-- COPY BLOCK -->
+						<tr>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 20px 30px 40px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">Hello ${username},</p>
+											<p style="margin: 0">
+											</br> 
+												You have successfully signed up for the PTC
+												Coding Challenge. </br> 
+												Over the nex 4 weeks,
+												you'll have 3 weekly multi-part coding
+												problems of varying difficulty to challenge
+												yourself with! </br> 
+												Learning from our tutorials
+												and post-challenge problem solutions is a
+												great way to improve your problem-solving
+												and coding skills. 
+												</br></br> 
+												New weekly challenges will be
+												released every Monday at 12PM EDT.
+												Participant submissions must be submitted before 11:59PM EDT on the following Sunday.
+											</p>
+											<p style="margin: 0">
+												You can read more about the official rules by clicking the link below: 
+											</p>
+										</td>
+									</tr>
+									<!-- BULLETPROOF BUTTON -->
+									<tr>
+										<td bgcolor="#ffffff" align="left">
+											<table
+												width="100%"
+												border="0"
+												cellspacing="0"
+												cellpadding="0"
+											>
+												<tr>
+													<td
+														bgcolor="#ffffff"
+														align="center"
+														style="padding: 20px 30px 60px 30px"
+													>
+														<table
+															border="0"
+															cellspacing="0"
+															cellpadding="0"
+														>
+															<tr>
+																<td
+																	align="center"
+																	style="
+																		border-radius: 15px;
+																	"
+																	bgcolor="#1b9cf7"
+																>
+																	<a
+																		href="https://coding-challenge.projecttechconferences.com/rules"
+																		target="_blank"
+																		style="
+																			font-size: 20px;
+																			font-family: Helvetica,
+																				Arial,
+																				sans-serif;
+																			color: #ffffff;
+																			text-decoration: none;
+																			color: #ffffff;
+																			text-decoration: none;
+																			padding: 15px
+																				40px;
+			
+																			display: inline-block;
+																		"
+																		>Rules</a
+																	>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 0px 30px 0px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												If that doesn't work, copy and paste the
+												following link in your browser:
+											</p>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 20px 30px 20px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												<a
+													href="/rules"
+													target="_blank"
+													style="color: #4a35ea"
+													>https://coding-challenge.projecttechconferences.com/rules</a
+												>
+											</p>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 0px 30px 20px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												If you have any questions, please send us an email — we're always happy to help out!
+											</p>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 0px 30px 40px 30px;
+												border-radius: 0px 0px 4px 4px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												Cheers,<br />The PTC Coding Challenge Team
+											</p>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+						<!-- FOOTER -->
+						<tr>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<!-- NAVIGATION -->
+									<tr>
+										<td
+											bgcolor="#f4f4f4"
+											align="left"
+											style="
+												padding: 30px 30px 30px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 14px;
+												font-weight: 400;
+												line-height: 18px;
+											"
+										>
+											<p style="margin: 0">
+												<a
+													href="https://www.projecttechconferences.com/"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>PTC Website</a
+												>
+												-
+												<a
+													href="https://coding-challenge.projecttechconferences.com/"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>PTC Coding Challenge</a
+												>
+												-
+												<a
+													href="https://www.projecttechconferences.com/contact"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>Contact Us</a
+												>
+											</p>
+										</td>
+									</tr>
+									<!-- ADDRESS -->
+									<tr>
+										<td
+											bgcolor="#f4f4f4"
+											align="left"
+											style="
+												padding: 0px 30px 30px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 14px;
+												font-weight: 400;
+												line-height: 18px;
+											"
+										>
+											<p style="margin: 0">
+												Charitable Registration No. 771791670 RR
+												0001
+											</p>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+					</table>
+				</body>
+			</html>
+			`
 		);
 
 		// store userid session which sets the cookie and keeps them logged in
@@ -221,16 +703,374 @@ export class UserResolver {
 		await sendEmail(
 			user.email,
 			"PTC Coding Challenge - Password Change Successful",
-			`<html>
-			<head>
-				<style>
-				</style>
-			</head>
-			<body>
-				<p>Hi ${username},</p>
-				<p>Your password has been changed successfully</p>
-			</body>
-		</html>`
+			`<!DOCTYPE html>
+			<html>
+				<head>
+					<title></title>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+					<meta name="viewport" content="width=device-width, initial-scale=1" />
+					<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+					<style type="text/css">
+						/* CLIENT-SPECIFIC STYLES */
+						body,
+						table,
+						td,
+						a {
+							-webkit-text-size-adjust: 100%;
+							-ms-text-size-adjust: 100%;
+						}
+						table,
+						td {
+							mso-table-lspace: 0pt;
+							mso-table-rspace: 0pt;
+						}
+						img {
+							-ms-interpolation-mode: bicubic;
+						}
+			
+						/* RESET STYLES */
+						img {
+							border: 0;
+							height: auto;
+							line-height: 100%;
+							outline: none;
+							text-decoration: none;
+						}
+						table {
+							border-collapse: collapse !important;
+						}
+						body {
+							height: 100% !important;
+							margin: 0 !important;
+							padding: 0 !important;
+							width: 100% !important;
+						}
+			
+						/* iOS BLUE LINKS */
+						a[x-apple-data-detectors] {
+							color: inherit !important;
+							text-decoration: none !important;
+							font-size: inherit !important;
+							font-family: inherit !important;
+							font-weight: inherit !important;
+							line-height: inherit !important;
+						}
+			
+						/* MOBILE STYLES */
+						@media screen and (max-width: 600px) {
+							h1 {
+								font-size: 32px !important;
+								line-height: 32px !important;
+							}
+						}
+			
+						/* ANDROID CENTER FIX */
+						div[style*="margin: 16px 0;"] {
+							margin: 0 !important;
+						}
+					</style>
+			
+					<style type="text/css"></style>
+				</head>
+				<body
+					style="
+						background-color: #f4f4f4;
+						margin: 0 !important;
+						padding: 0 !important;
+					"
+				>
+					<!-- HIDDEN PREHEADER TEXT -->
+					<div
+						style="
+							display: none;
+							font-size: 1px;
+							color: #fefefe;
+							line-height: 1px;
+							font-family: Helvetica, Arial, sans-serif;
+							max-height: 0px;
+							max-width: 0px;
+							opacity: 0;
+							overflow: hidden;
+						"
+					>
+						Reset Password
+					</div>
+			
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+						<!-- LOGO -->
+						<tr>
+							<td bgcolor="#f4f4f4" align="center">
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<tr>
+										<td
+											align="center"
+											valign="top"
+											style="padding: 40px 10px 40px 10px"
+										>
+											<a
+												href="https://www.projecttechconferences.com/"
+												target="_blank"
+											>
+												<img
+													alt="Logo"
+													src="https://static.wixstatic.com/media/6ec599_870d216ee50e4be8afbba1edafcfe4f3~mv2_d_2048_2048_s_2.png/v1/fill/w_160,h_149,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/PTC%20Logo%20Transparent.png"
+													width="169"
+													height="40"
+													style="
+														display: block;
+														width: 169px;
+														max-width: 169px;
+														min-width: 169px;
+														font-family: Helvetica, Arial,
+															sans-serif;
+														color: #ffffff;
+														font-size: 18px;
+													"
+													border="0"
+												/>
+											</a>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+						<!-- HERO -->
+						<tr>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="center"
+											valign="top"
+											style="
+												padding: 40px 20px 20px 20px;
+												border-radius: 4px 4px 0px 0px;
+												color: #111111;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 48px;
+												font-weight: 400;
+												letter-spacing: 4px;
+												line-height: 48px;
+											"
+										>
+											<h1
+												style="
+													font-size: 28px;
+													font-weight: 400;
+													margin: 0;
+													letter-spacing: 0px;
+												"
+											>
+												Password Change Successful
+											</h1>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+						<!-- COPY BLOCK -->
+						<tr>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 20px 30px 40px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">Hello ${username},</p>
+											<p style="margin: 0">
+												Your password has been changed successfully.
+											</p>
+										</td>
+									</tr>
+			
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 0px 30px 20px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												If you have any questions, please send us an
+												email — we're always happy to help out!
+											</p>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 0px 30px 40px 30px;
+												border-radius: 0px 0px 4px 4px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												Cheers,<br />The PTC Coding Challenge Team
+											</p>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<!-- FOOTER -->
+						<tr>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<!-- NAVIGATION -->
+									<tr>
+										<td
+											bgcolor="#f4f4f4"
+											align="left"
+											style="
+												padding: 30px 30px 30px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 14px;
+												font-weight: 400;
+												line-height: 18px;
+											"
+										>
+											<p style="margin: 0">
+												<a
+													href="https://www.projecttechconferences.com/"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>PTC Website</a
+												>
+												-
+												<a
+													href="https://coding-challenge.projecttechconferences.com/"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>PTC Coding Challenge</a
+												>
+												-
+												<a
+													href="https://www.projecttechconferences.com/contact"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>Contact Us</a
+												>
+											</p>
+										</td>
+									</tr>
+									<!-- ADDRESS -->
+									<tr>
+										<td
+											bgcolor="#f4f4f4"
+											align="left"
+											style="
+												padding: 0px 30px 30px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 14px;
+												font-weight: 400;
+												line-height: 18px;
+											"
+										>
+											<p style="margin: 0">
+												Charitable Registration No. 771791670 RR
+												0001
+											</p>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+					</table>
+				</body>
+			</html>
+			`
 		);
 
 		return { user };
@@ -269,205 +1109,487 @@ export class UserResolver {
 
 			`<!DOCTYPE html>
 			<html>
-			<head>
-			<title></title>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-			<style type="text/css">    
-				/* CLIENT-SPECIFIC STYLES */
-				body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-				table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-				img { -ms-interpolation-mode: bicubic; }
+				<head>
+					<title></title>
+					<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+					<meta name="viewport" content="width=device-width, initial-scale=1" />
+					<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+					<style type="text/css">
+						/* CLIENT-SPECIFIC STYLES */
+						body,
+						table,
+						td,
+						a {
+							-webkit-text-size-adjust: 100%;
+							-ms-text-size-adjust: 100%;
+						}
+						table,
+						td {
+							mso-table-lspace: 0pt;
+							mso-table-rspace: 0pt;
+						}
+						img {
+							-ms-interpolation-mode: bicubic;
+						}
 			
-				/* RESET STYLES */
-				img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
-				table { border-collapse: collapse !important; }
-				body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+						/* RESET STYLES */
+						img {
+							border: 0;
+							height: auto;
+							line-height: 100%;
+							outline: none;
+							text-decoration: none;
+						}
+						table {
+							border-collapse: collapse !important;
+						}
+						body {
+							height: 100% !important;
+							margin: 0 !important;
+							padding: 0 !important;
+							width: 100% !important;
+						}
 			
-				/* iOS BLUE LINKS */
-				a[x-apple-data-detectors] {
-					color: inherit !important;
-					text-decoration: none !important;
-					font-size: inherit !important;
-					font-family: inherit !important;
-					font-weight: inherit !important;
-					line-height: inherit !important;
-				}
-				
-				/* MOBILE STYLES */
-				@media screen and (max-width:600px){
-					h1 {
-						font-size: 32px !important;
-						line-height: 32px !important;
-					}
-				}
+						/* iOS BLUE LINKS */
+						a[x-apple-data-detectors] {
+							color: inherit !important;
+							text-decoration: none !important;
+							font-size: inherit !important;
+							font-family: inherit !important;
+							font-weight: inherit !important;
+							line-height: inherit !important;
+						}
 			
-				/* ANDROID CENTER FIX */
-				div[style*="margin: 16px 0;"] { margin: 0 !important; }
-			</style>
+						/* MOBILE STYLES */
+						@media screen and (max-width: 600px) {
+							h1 {
+								font-size: 32px !important;
+								line-height: 32px !important;
+							}
+						}
 			
-			<style type="text/css">
+						/* ANDROID CENTER FIX */
+						div[style*="margin: 16px 0;"] {
+							margin: 0 !important;
+						}
+					</style>
 			
-			</style>
-			</head>
-			<body style="background-color: #f4f4f4; margin: 0 !important; padding: 0 !important;">
+					<style type="text/css"></style>
+				</head>
+				<body
+					style="
+						background-color: #f4f4f4;
+						margin: 0 !important;
+						padding: 0 !important;
+					"
+				>
+					<!-- HIDDEN PREHEADER TEXT -->
+					<div
+						style="
+							display: none;
+							font-size: 1px;
+							color: #fefefe;
+							line-height: 1px;
+							font-family: Helvetica, Arial, sans-serif;
+							max-height: 0px;
+							max-width: 0px;
+							opacity: 0;
+							overflow: hidden;
+						"
+					>
+						Reset Password
+					</div>
 			
-			<!-- HIDDEN PREHEADER TEXT -->
-			<div style="display: none; font-size: 1px; color: #fefefe; line-height: 1px; font-family: Helvetica, Arial, sans-serif; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">
-				Reset your password
-			</div>
-			
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<!-- LOGO -->
-				<tr>
-					<td bgcolor="#f4f4f4" align="center">
-						<!--[if (gte mso 9)|(IE)]>
-						<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+						<!-- LOGO -->
 						<tr>
-						<td align="center" valign="top" width="600">
-						<![endif]-->
-						<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
-							<tr>
-								<td align="center" valign="top" style="padding: 40px 10px 40px 10px;">
-									<a href="http://rightindem.com" target="_blank">
-										<img alt="Logo" src="https://rightindem.com/wp-content/themes/HTML5-Reset-WordPress-Theme-master/images/logo.png" width="169" height="40" style="display: block; width: 169px; max-width: 169px; min-width: 169px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; font-size: 18px;" border="0">
-									</a>
-								</td>
-							</tr>
-						</table>
-						<!--[if (gte mso 9)|(IE)]>
-						</td>
-						</tr>
-						</table>
-						<![endif]-->
-					</td>
-				</tr>
-				<!-- HERO -->
-				<tr>
-					<td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
-						<!--[if (gte mso 9)|(IE)]>
-						<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
-						<tr>
-						<td align="center" valign="top" width="600">
-						<![endif]-->
-						<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
-							<tr>
-								<td bgcolor="#ffffff" align="center" valign="top" style="padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #111111; font-family: Helvetica, Arial, sans-serif; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;">
-								  <h1 style="font-size: 28px; font-weight: 400; margin: 0; letter-spacing: 0px;">Reset your password</h1>
-								</td>
-							</tr>
-						</table>
-						<!--[if (gte mso 9)|(IE)]>
-						</td>
-						</tr>
-						</table>
-						<![endif]-->
-					</td>
-				</tr>
-				<!-- COPY BLOCK -->
-				<tr>
-					<td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
-						<!--[if (gte mso 9)|(IE)]>
-						<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
-						<tr>
-						<td align="center" valign="top" width="600">
-						<![endif]-->
-						<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
-						  <!-- COPY -->
-						  <tr>
-							<td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-							  <p style="margin: 0;">Hello ${username},</p> 
-							  <p style="margin: 0;">We've received a request to reset the password for the PTC account associated with: ${email}.</p>
-							  <p style="margin: 0;">You can reset your password by clicking the link below:</p>
-							  
-							</td>
-						  </tr>
-						  <!-- BULLETPROOF BUTTON -->
-						  <tr>
-							<td bgcolor="#ffffff" align="left">
-							  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-								<tr>
-								  <td bgcolor="#ffffff" align="center" style="padding: 20px 30px 60px 30px;">
-									<table border="0" cellspacing="0" cellpadding="0">
-									  <tr>
-										  <td align="center" style="border-radius: 3px;" bgcolor="#4A35EA"><a href="http://localhost:3000/change-password/${token}" target="_blank" style="font-size: 20px; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; color: #ffffff; text-decoration: none; padding: 15px 25px; border-radius: 2px; border: 1px solid #4A35EA; display: inline-block;">Reset Password</a></td>
-									  </tr>
+							<td bgcolor="#f4f4f4" align="center">
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<tr>
+										<td
+											align="center"
+											valign="top"
+											style="padding: 40px 10px 40px 10px"
+										>
+											<a
+												href="https://www.projecttechconferences.com/"
+												target="_blank"
+											>
+												<img
+													alt="Logo"
+													src="https://static.wixstatic.com/media/6ec599_870d216ee50e4be8afbba1edafcfe4f3~mv2_d_2048_2048_s_2.png/v1/fill/w_160,h_149,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/PTC%20Logo%20Transparent.png"
+													width="169"
+													height="40"
+													style="
+														display: block;
+														width: 169px;
+														max-width: 169px;
+														min-width: 169px;
+														font-family: Helvetica, Arial,
+															sans-serif;
+														color: #ffffff;
+														font-size: 18px;
+													"
+													border="0"
+												/>
+											</a>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
 									</table>
-								  </td>
-								</tr>
-							  </table>
+									<![endif]-->
 							</td>
-						  </tr>
-						  <!-- COPY -->
-						  <tr>
-							<td bgcolor="#ffffff" align="left" style="padding: 0px 30px 0px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-							  <p style="margin: 0;">If that doesn't work, copy and paste the following link in your browser:</p>
-							</td>
-						  </tr>
-						  <!-- COPY -->
-							<tr>
-							  <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 20px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-								<p style="margin: 0;"><a href="http://localhost:3000/change-password/${token}" target="_blank" style="color: #4A35EA;">http://localhost:3000/change-password/${token}</a></p>
-							  </td>
-							</tr>
-						  <!-- COPY -->
-						  <tr>
-							<td bgcolor="#ffffff" align="left" style="padding: 0px 30px 20px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-							  <p style="margin: 0;">If you have any questions, just reply to this email—we're always happy to help out.</p>
-							</td>
-						  </tr>
-						  <!-- COPY -->
-						  <tr>
-							<td bgcolor="#ffffff" align="left" style="padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;" >
-							  <p style="margin: 0;">Cheers,<br>The PTC Coding Challenge Team</p>
-							</td>
-						  </tr>
-						</table>
-						<!--[if (gte mso 9)|(IE)]>
-						</td>
 						</tr>
-						</table>
-						<![endif]-->
-					</td>
-				</tr>
-				<!-- FOOTER -->
-				<tr>
-					<td bgcolor="#f4f4f4" align="center" style="padding: 0px 10px 0px 10px;">
-						<!--[if (gte mso 9)|(IE)]>
-						<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+						<!-- HERO -->
 						<tr>
-						<td align="center" valign="top" width="600">
-						<![endif]-->
-						<table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;" >
-						  <!-- NAVIGATION -->
-						  <tr>
-							<td bgcolor="#f4f4f4" align="left" style="padding: 30px 30px 30px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >
-							  <p style="margin: 0;">
-								<a href="https://www.projecttechconferences.com/" target="_blank" style="color: #111111; font-weight: 700;">PTC Website</a> -
-								<a href="http://localhost:3000" target="_blank" style="color: #111111; font-weight: 700;">PTC Coding Challenge</a> -
-								<a href="https://www.projecttechconferences.com/contact" target="_blank" style="color: #111111; font-weight: 700;">Contact Us</a>
-							  </p>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="center"
+											valign="top"
+											style="
+												padding: 40px 20px 20px 20px;
+												border-radius: 4px 4px 0px 0px;
+												color: #111111;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 48px;
+												font-weight: 400;
+												letter-spacing: 4px;
+												line-height: 48px;
+											"
+										>
+											<h1
+												style="
+													font-size: 28px;
+													font-weight: 400;
+													margin: 0;
+													letter-spacing: 0px;
+												"
+											>
+												Reset Password
+											</h1>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
 							</td>
-						  </tr>
-						  <!-- ADDRESS -->
-						  <tr>
-							<td bgcolor="#f4f4f4" align="left" style="padding: 0px 30px 30px 30px; color: #666666; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; line-height: 18px;" >
-							  <p style="margin: 0;">Charitable Registration No. 771791670 RR 0001</p>
-							</td>
-						  </tr>
-						</table>
-						<!--[if (gte mso 9)|(IE)]>
-						</td>
 						</tr>
-						</table>
-						<![endif]-->
-					</td>
-				</tr>
-			</table>
-				
-			</body>
+						<!-- COPY BLOCK -->
+						<tr>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 20px 30px 40px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">Hello ${username},</p>
+											<p style="margin: 0">
+												We've received a request to reset the
+												password for the PTC account associated
+												with: ${email}.
+											</p>
+											<p style="margin: 0">
+												You can reset your password by clicking the
+												link below:
+											</p>
+										</td>
+									</tr>
+									<!-- BULLETPROOF BUTTON -->
+									<tr>
+										<td bgcolor="#ffffff" align="left">
+											<table
+												width="100%"
+												border="0"
+												cellspacing="0"
+												cellpadding="0"
+											>
+												<tr>
+													<td
+														bgcolor="#ffffff"
+														align="center"
+														style="padding: 20px 30px 60px 30px"
+													>
+														<table
+															border="0"
+															cellspacing="0"
+															cellpadding="0"
+														>
+															<tr>
+																<td
+																	align="center"
+																	style="
+																		border-radius: 15px;
+																	"
+																	bgcolor="#1b9cf7"
+																>
+																	<a
+																		href="http://localhost:3000/change-password/${token}"
+																		target="_blank"
+																		style="
+																			font-size: 20px;
+																			font-family: Helvetica,
+																				Arial,
+																				sans-serif;
+																			color: #ffffff;
+																			text-decoration: none;
+																			color: #ffffff;
+																			text-decoration: none;
+																			padding: 15px
+																				40px;
+			
+																			display: inline-block;
+																		"
+																		>Reset Password</a
+																	>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 0px 30px 0px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												If that doesn't work, copy and paste the
+												following link in your browser:
+											</p>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 20px 30px 20px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												<a
+													href="http://localhost:3000/change-password/${token}"
+													target="_blank"
+													style="color: #4a35ea"
+													>http://localhost:3000/change-password/${token}</a
+												>
+											</p>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 0px 30px 20px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												If you have any questions, just reply to
+												this email—we're always happy to help out.
+											</p>
+										</td>
+									</tr>
+									<!-- COPY -->
+									<tr>
+										<td
+											bgcolor="#ffffff"
+											align="left"
+											style="
+												padding: 0px 30px 40px 30px;
+												border-radius: 0px 0px 4px 4px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 18px;
+												font-weight: 400;
+												line-height: 25px;
+											"
+										>
+											<p style="margin: 0">
+												Cheers,<br />The PTC Coding Challenge Team
+											</p>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+						<!-- FOOTER -->
+						<tr>
+							<td
+								bgcolor="#f4f4f4"
+								align="center"
+								style="padding: 0px 10px 0px 10px"
+							>
+								<!--[if (gte mso 9)|(IE)]>
+									<table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+									<tr>
+									<td align="center" valign="top" width="600">
+									<![endif]-->
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									width="100%"
+									style="max-width: 600px"
+								>
+									<!-- NAVIGATION -->
+									<tr>
+										<td
+											bgcolor="#f4f4f4"
+											align="left"
+											style="
+												padding: 30px 30px 30px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 14px;
+												font-weight: 400;
+												line-height: 18px;
+											"
+										>
+											<p style="margin: 0">
+												<a
+													href="https://www.projecttechconferences.com/"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>PTC Website</a
+												>
+												-
+												<a
+													href="http://localhost:3000"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>PTC Coding Challenge</a
+												>
+												-
+												<a
+													href="https://www.projecttechconferences.com/contact"
+													target="_blank"
+													style="color: #111111; font-weight: 700"
+													>Contact Us</a
+												>
+											</p>
+										</td>
+									</tr>
+									<!-- ADDRESS -->
+									<tr>
+										<td
+											bgcolor="#f4f4f4"
+											align="left"
+											style="
+												padding: 0px 30px 30px 30px;
+												color: #666666;
+												font-family: Helvetica, Arial, sans-serif;
+												font-size: 14px;
+												font-weight: 400;
+												line-height: 18px;
+											"
+										>
+											<p style="margin: 0">
+												Charitable Registration No. 771791670 RR
+												0001
+											</p>
+										</td>
+									</tr>
+								</table>
+								<!--[if (gte mso 9)|(IE)]>
+									</td>
+									</tr>
+									</table>
+									<![endif]-->
+							</td>
+						</tr>
+					</table>
+				</body>
 			</html>
+			
 			`
 		);
 

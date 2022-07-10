@@ -85,8 +85,6 @@ export class SubmissionsResolver {
 	): Promise<S3SubmissionResponse | null> {
 		const { fileName, metadata, path, fileType } = presignedUrlInput;
 
-		console.log("REGION: ", process.env.S3_REGION);
-
 		const cleanedFileName = fileName.replace(/\s+/g, "");
 		const mimeFileType = mime.lookup(fileType);
 		const s3 = new S3({
