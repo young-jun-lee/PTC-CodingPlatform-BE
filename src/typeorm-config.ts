@@ -8,8 +8,6 @@ import { DATABASE_URL } from "./constants";
 
 require("dotenv").config();
 
-console.log("database url: ", DATABASE_URL);
-
 export const AppDataSource = new DataSource({
 	type: "postgres",
 	url: DATABASE_URL,

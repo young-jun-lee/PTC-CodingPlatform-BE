@@ -25,7 +25,7 @@ export class UserResolver {
 	// custom query to return a list of all existing users in db
 	@Query(() => [User], { nullable: true })
 	async listUsers(): Promise<User[] | null> {
-		console.log("arrived at listusers function");
+		
 		return User.find();
 	}
 
@@ -34,7 +34,7 @@ export class UserResolver {
 		@Arg("options") options: UsernamePasswordInput,
 		@Ctx() { req }: MyContext
 	): Promise<UserResponse> {
-		console.log("arrived at register function");
+		
 		const errors = validateRegister(options);
 
 		if (errors) {
@@ -59,7 +59,7 @@ export class UserResolver {
 				.execute();
 			user = result.raw[0];
 		} catch (error) {
-			console.log(error.detail);
+			
 			// try catch block to handle edge cases such as a user is already registered with the same name
 			// error code 23505 means duplicate key exists
 			if (error.code === "23505" && error.detail.includes("username")) {
@@ -661,7 +661,7 @@ export class UserResolver {
 			};
 		}
 		const key = FORGOT_PASSWORD_PREFIX + token;
-		console.log(newPassword);
+		
 		const userId = await redis.get(key);
 		if (!userId) {
 			return {

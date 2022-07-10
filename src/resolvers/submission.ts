@@ -54,8 +54,6 @@ export class SubmissionsResolver {
 		};
 
 		s3.deleteObject(s3Params, function (err, data) {
-			console.log("ERR: ", err);
-			console.log("DATA: ", data);
 			if (err) {
 				return {
 					error: [
@@ -177,7 +175,7 @@ export class SubmissionsResolver {
 	): Promise<CreateSubmissionResponse> {
 		let newSubmission;
 		if (options.existing && options.updates !== undefined) {
-			console.log("here");
+			
 			newSubmission = await Submissions.update(
 				{
 					id: options.id,
@@ -273,8 +271,7 @@ export class SubmissionsResolver {
 			const user: TopQuery[] = await AppDataSource.query(`
 			SELECT username, "totalPoints", rank() over (order by "totalPoints" desc)  FROM "user" LIMIT 10;
 			`);
-			console.log(typeof user);
-			console.log("user: ", user);
+
 			return user;
 		} catch (error) {
 			console.log(error);
