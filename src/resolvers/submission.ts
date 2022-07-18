@@ -175,7 +175,6 @@ export class SubmissionsResolver {
 	): Promise<CreateSubmissionResponse> {
 		let newSubmission;
 		if (options.existing && options.updates !== undefined) {
-			
 			newSubmission = await Submissions.update(
 				{
 					id: options.id,
@@ -269,7 +268,7 @@ export class SubmissionsResolver {
 		const RANK_LIMIT = 10;
 		try {
 			const user: TopQuery[] = await AppDataSource.query(`
-			SELECT username, "totalPoints", rank() over (order by "totalPoints" desc)  FROM "user" LIMIT 10;
+			SELECT username, "totalPoints", rank() over (order by "totalPoints" desc)  FROM "user" where "isAdmin"=false LIMIT 10;
 			`);
 
 			return user;
